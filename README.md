@@ -24,7 +24,7 @@ Direction of Movement ( North or East or South or West ) = N
 
 which combined becomes
 
-"uniqueName_H_E.mov"
+"surfingVideo_H_E.mov"
 
 
 

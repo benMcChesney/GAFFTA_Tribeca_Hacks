@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		D9C9BB4D16FC2D1D00725509 /* ArchiveClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9C9BB4C16FC2D1D00725509 /* ArchiveClip.cpp */; };
+		D9C9BB7E16FC2DB700725509 /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9C9BB5216FC2DB600725509 /* Tween.cpp */; };
+		D9C9BB7F16FC2DB700725509 /* Tweenzor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9C9BB5716FC2DB600725509 /* Tweenzor.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -62,6 +65,16 @@
 /* Begin PBXFileReference section */
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		D9C9BB4216FC28F000725509 /* ArchiveClip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArchiveClip.h; sourceTree = "<group>"; };
+		D9C9BB4C16FC2D1D00725509 /* ArchiveClip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArchiveClip.cpp; sourceTree = "<group>"; };
+		D9C9BB4F16FC2DB600725509 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		D9C9BB5116FC2DB600725509 /* ofxTweenzor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTweenzor.h; sourceTree = "<group>"; };
+		D9C9BB5216FC2DB600725509 /* Tween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tween.cpp; sourceTree = "<group>"; };
+		D9C9BB5316FC2DB600725509 /* Tween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tween.h; sourceTree = "<group>"; };
+		D9C9BB5416FC2DB600725509 /* TweenEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweenEvent.h; sourceTree = "<group>"; };
+		D9C9BB5516FC2DB600725509 /* TweenFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweenFunctions.h; sourceTree = "<group>"; };
+		D9C9BB5616FC2DB600725509 /* TweenSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweenSelector.h; sourceTree = "<group>"; };
+		D9C9BB5716FC2DB600725509 /* Tweenzor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tweenzor.cpp; sourceTree = "<group>"; };
+		D9C9BB5816FC2DB600725509 /* Tweenzor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweenzor.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -118,6 +131,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				D9C9BB4E16FC2DB600725509 /* ofxTweenzor */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -150,6 +164,31 @@
 				BBAB23BE13894E4700AA2426 /* GLUT.framework */,
 			);
 			name = "3rd party frameworks";
+			sourceTree = "<group>";
+		};
+		D9C9BB4E16FC2DB600725509 /* ofxTweenzor */ = {
+			isa = PBXGroup;
+			children = (
+				D9C9BB4F16FC2DB600725509 /* README */,
+				D9C9BB5016FC2DB600725509 /* src */,
+			);
+			name = ofxTweenzor;
+			path = ../../../addons/ofxTweenzor;
+			sourceTree = "<group>";
+		};
+		D9C9BB5016FC2DB600725509 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D9C9BB5116FC2DB600725509 /* ofxTweenzor.h */,
+				D9C9BB5216FC2DB600725509 /* Tween.cpp */,
+				D9C9BB5316FC2DB600725509 /* Tween.h */,
+				D9C9BB5416FC2DB600725509 /* TweenEvent.h */,
+				D9C9BB5516FC2DB600725509 /* TweenFunctions.h */,
+				D9C9BB5616FC2DB600725509 /* TweenSelector.h */,
+				D9C9BB5716FC2DB600725509 /* Tweenzor.cpp */,
+				D9C9BB5816FC2DB600725509 /* Tweenzor.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		E4328144138ABC890047C5CB /* Products */ = {
@@ -189,6 +228,7 @@
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				D9C9BB4216FC28F000725509 /* ArchiveClip.h */,
+				D9C9BB4C16FC2D1D00725509 /* ArchiveClip.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -288,6 +328,9 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
+				D9C9BB4D16FC2D1D00725509 /* ArchiveClip.cpp in Sources */,
+				D9C9BB7E16FC2DB700725509 /* Tween.cpp in Sources */,
+				D9C9BB7F16FC2DB700725509 /* Tweenzor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,7 +374,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -365,7 +408,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};

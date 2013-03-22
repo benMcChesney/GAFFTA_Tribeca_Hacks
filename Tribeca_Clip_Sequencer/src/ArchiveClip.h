@@ -10,6 +10,7 @@
 #define Tribeca_Clip_Sequencer_ArchiveClip_h
 
 #include "ofMain.h"
+#include "ofxTweenzor.h"
 
 class ArchiveClip
 {
@@ -19,9 +20,10 @@ class ArchiveClip
     
     
         void setup ( string videoPath , float direction ) ;
-        void update ( ) :
-        void draw ( ) ;
-        
+        void update ( ) ;
+        void draw ( );
+    
+        ofVideoPlayer vid ; 
         float alpha ;
         
 };

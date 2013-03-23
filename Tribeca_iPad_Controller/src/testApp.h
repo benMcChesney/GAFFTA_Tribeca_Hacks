@@ -28,5 +28,8 @@ class testApp : public ofxiPhoneApp{
 	
         ofImage arrow;
     
-        ofxOscSender sender ; 
+        ofxOscSender sender ;
+    
+        string host ;
+        int port ;
 };

@@ -29,6 +29,9 @@ void ClipCollection::setup ( string dirPath )
     clips[0].loadFromPath()  ; 
     clipCutOff = 0.98f ;
     setClipSpeed( 1.0f ) ;
+    
+    bRepeatOne = false ;
+    nextIndex = -2 ;
 }
 
 void ClipCollection::thaw ( )
@@ -49,18 +52,37 @@ void ClipCollection::freeze( )
     clips[currentIndex].stop() ;
     clips[currentIndex].close() ;
     
+    if ( nextIndex >= 0 )
+    {
+        clips[nextIndex].stop( ) ;
+        clips[nextIndex].close( ) ; 
+    }
+    
+    
+}
+
+int ClipCollection::getRandomIndex( )
+{
+    int _index = -2 ; 
     bool bOk = false ;
     while ( bOk == false )
     {
         int _nextIndex = ofRandom( 0 , (clips.size()-1) ) ;
-        if ( _nextIndex != currentIndex )
+        if ( _nextIndex != currentIndex && _nextIndex != nextIndex )
         {
             bOk = true ;
-            currentIndex = _nextIndex ;
+            _index = _nextIndex ;
+            break ;
         }
     }
+    
+    _index = currentIndex + 1 ;
+    if ( _index >= (clips.size()-1) )
+    {
+        _index = 0 ;
+    }
+    return _index ;
 }
-
 void ClipCollection::remix( int touchId )
 {
     //return;
@@ -111,9 +133,12 @@ void ClipCollection::update ( )
     }
     else if ( clips[currentIndex].getPosition() >= 0.98 )
     {
+        if ( bRepeatOne == false )
+        {
         //cout << "TRANSITIONING TO NEXT VIA UPDATE : !"  << endl ;
         //cout << "currentIndex " << currentIndex << " vs cutOff " << clipCutOff << endl ;
         transitionToNext( ) ;
+        }
     }
    // clips[nextIndex].update( ) ;
 }
@@ -125,6 +150,11 @@ void ClipCollection::draw ( )
  //   {
         clips[ currentIndex ].draw( ) ;
  //   }
+    if ( nextIndex >= 0 )
+    {
+     //   clips[nextIndex].draw( ) ;
+    }
+    
 }
 
 void ClipCollection::setClipSpeed ( float _clipSpeed )
@@ -152,16 +182,7 @@ void ClipCollection::transitionToNext( )
     //cout << "currentIndex : " << currentIndex << " vs clips.size() " << clips.size() << endl ;
     //Tweenzor::add( &clips[currentIndex].alpha , clips[currentIndex].alpha , 0.0f , 0.0f , 0.5f , EASE_OUT_QUAD ) ;
     
-    bool bOk = false ;
-    while ( bOk == false )
-    {
-        int _nextIndex = ofRandom( 0 , (clips.size()) ) ;
-        if ( _nextIndex != currentIndex )
-        {
-            bOk = true ;
-            currentIndex = _nextIndex ;
-        }
-    }
+    currentIndex = getRandomIndex() ;
     //ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
     
 //    return ;

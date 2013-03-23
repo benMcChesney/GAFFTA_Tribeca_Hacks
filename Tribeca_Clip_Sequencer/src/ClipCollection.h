@@ -27,6 +27,11 @@ class ClipCollection
         void freeze( ) ;
     
         int currentIndex ;
+        int nextIndex ;
+    
+        ofVec2f currentPos ;
+        ofVec2f nextPos ;
+    
         float clipSpeed ;
         float clipCutOff ; 
         //int nextIndex ;
@@ -37,8 +42,8 @@ class ClipCollection
         vector<ArchiveClip> clips ;
         void setClipSpeed ( float clipSpeed ) ;
     
-      
-    
+        bool bRepeatOne ; 
+        int getRandomIndex( ) ; 
 };
 
 #endif /* defined(__Tribeca_Clip_Sequencer__ClipCollection__) */

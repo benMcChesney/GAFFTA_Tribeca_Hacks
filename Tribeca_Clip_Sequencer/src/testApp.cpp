@@ -3,7 +3,9 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     
-    ofBackground( 0, 0, 0) ; 
+    Tweenzor::init( ) ;
+    
+    ofBackground( 0, 0, 0) ;
     ofSetLogLevel( OF_LOG_VERBOSE ) ;
     
     collections.assign ( 5 , ClipCollection() ) ;
@@ -13,7 +15,8 @@ void testApp::setup(){
     collections[2].setup( "LEFT" ) ;
     collections[3].setup( "RIGHT" ) ;
     collections[4].setup( "STILL" ) ;
-   
+    collections[4].bRepeatOne = true ;
+    
     osc.setup( 12345 ) ;
     ofSetFrameRate( 30 ) ;
     
@@ -24,7 +27,8 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     
-    lastDirection = direction ; 
+   Tweenzor::update( ofGetElapsedTimeMillis() )  ;
+    lastDirection = direction ;
     ofSetWindowTitle( "@" + ofToString( ofGetFrameRate() ) + " FPS " ) ;
     
     float maxSpeed = 0.25f ;
@@ -49,11 +53,11 @@ void testApp::update(){
                 accSpeed = accelX ;
                 if ( accelX > 0 )
                 {
-                    direction = WEST ;
+                    direction = SOUTH ;
                 }
                 else
                 {
-                    direction = EAST ;
+                    direction = NORTH ;
                 }
                 accSpeed = ofMap ( abs(accelX) , deadZone , 1.0f , minSpeed , maxSpeed , true ) ;
                 largerDir = accelX ; 
@@ -63,11 +67,11 @@ void testApp::update(){
                 accSpeed = accelY ;
                 if ( accelY < 0 )
                 {
-                    direction = SOUTH ;
+                    direction = EAST ;
                 }
                 else
                 {
-                    direction = NORTH ;
+                    direction = WEST ;
                 }
                 accSpeed = ofMap ( abs(accelY) , deadZone , 1.0f , minSpeed , maxSpeed , true ) ;
                 largerDir = accelY ;
@@ -135,7 +139,7 @@ void testApp::draw(){
    //     ss << " STILL " ;
     } ;
         
-    ofDrawBitmapStringHighlight ( ss.str() , 15 , 15 ) ; 
+    //ofDrawBitmapStringHighlight ( ss.str() , 15 , 15 ) ;
         
 }
 

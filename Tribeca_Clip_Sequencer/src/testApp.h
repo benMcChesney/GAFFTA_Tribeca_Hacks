@@ -1,7 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ArchiveClip.h"
+#include "ofxOsc.h"
+#include "ClipCollection.h"
 
 class testApp : public ofBaseApp{
 	public:
@@ -19,7 +20,35 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        ofDirectory dir ;
-        vector<ArchiveClip*> horizontalClips ;
-        vector<ArchiveClip*> verticalClips ;
+        vector<ClipCollection> collections ;
+    /*
+        vector<ArchiveClip*> northClips ;
+        vector<ArchiveClip*> southClips ;
+        vector<ArchiveClip*> eastClips ;
+        vector<ArchiveClip*> westClips ;
+        vector<ArchiveClip*> stillClips ; */
+    
+//        void loadFolderOfClips( string dirPath , vector<ArchiveClip*> * clipsRef ) ;
+    
+    
+//        int currentDirection ;
+//        int lastDirection ;
+    
+        ofxOscReceiver osc ;
+    
+        enum ScrollingDirection
+        {
+            NORTH,
+            SOUTH,
+            EAST,
+            WEST,
+            STILL
+        };
+    
+        ScrollingDirection lastDirection ; 
+        ScrollingDirection direction ;
+    
+        
+    
+    
 };

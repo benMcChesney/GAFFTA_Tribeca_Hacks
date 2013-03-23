@@ -2,54 +2,141 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-    dir.listDir( "bucket" ) ;
     
-    cout << " dir.size() " << dir.size() << endl ;
+    ofBackground( 0, 0, 0) ; 
+    ofSetLogLevel( OF_LOG_VERBOSE ) ;
     
-    for ( int i = 0 ; i < dir.size() ; i++ )
-    {
-        string name = dir.getName( i ) ;
-        int underscoreIndexFirst = name.find("_", 0 ) ;
-        int underscoreIndexSecond = name.find("_", underscoreIndexFirst + 1 ) ;
-        string underFirst = ofToUpper(name.substr( underscoreIndexFirst+1 , 1 )) ;
-        string underSecond = ofToUpper(name.substr( underscoreIndexSecond+1 , 1 )) ;
-        cout << "FIRST " << underFirst << " SECOND " << underSecond << " out of NAME " << name << endl ;
-        bool bHorizontal = true ;
-        if ( underFirst.compare( "V" ) == 0 )
-            bHorizontal = false ;
-        
-        if ( bHorizontal == false )
-        {
-            float vSpeed = -1 ;
-            if ( underSecond == "N" )
-            {
-                vSpeed = 1 ;
-            }
-            ArchiveClip * clip = new ArchiveClip( ) ;
-            clip->setup( dir.getPath( i ) , vSpeed ) ;
-            verticalClips.push_back( clip ) ;
-        }
-        else
-        {
-            float hSpeed = -1 ;
-            if ( underSecond == "E" )
-                hSpeed = 1 ;
-            
-            ArchiveClip * clip = new ArchiveClip( ) ;
-            clip->setup( dir.getPath( i ) , hSpeed ) ;
-            horizontalClips.push_back( clip ) ; 
-        }
-    }
+    collections.assign ( 5 , ClipCollection() ) ;
+    
+    collections[0].setup( "UP" ) ;
+    collections[1].setup( "DOWN" ) ;
+    collections[2].setup( "LEFT" ) ;
+    collections[3].setup( "RIGHT" ) ;
+    collections[4].setup( "STILL" ) ;
+   
+    osc.setup( 12345 ) ;
+    ofSetFrameRate( 30 ) ;
+    
+    direction = NORTH ; 
+    collections[(int)direction].thaw( ) ;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+    
+    lastDirection = direction ; 
+    ofSetWindowTitle( "@" + ofToString( ofGetFrameRate() ) + " FPS " ) ;
+    
+    float maxSpeed = 0.25f ;
+    float minSpeed = 0.95f ;
+    
+    float accSpeed = collections[(int)direction].clipSpeed ;
+    while ( osc.hasWaitingMessages() )
+    {
+        ofxOscMessage m ;
+        osc.getNextMessage( &m ) ;
+        
+        float deadZone = 0.25;
+        
+        if ( m.getAddress() == "/accel" )
+        {
+            float accelX = m.getArgAsFloat( 0 ) ;
+            float accelY = m.getArgAsFloat( 1 ) ;
+            
+            float largerDir ; 
+            if ( abs(accelX) > abs(accelY) )
+            {
+                accSpeed = accelX ;
+                if ( accelX > 0 )
+                {
+                    direction = WEST ;
+                }
+                else
+                {
+                    direction = EAST ;
+                }
+                accSpeed = ofMap ( abs(accelX) , deadZone , 1.0f , minSpeed , maxSpeed , true ) ;
+                largerDir = accelX ; 
+            }
+            else
+            {
+                accSpeed = accelY ;
+                if ( accelY < 0 )
+                {
+                    direction = SOUTH ;
+                }
+                else
+                {
+                    direction = NORTH ;
+                }
+                accSpeed = ofMap ( abs(accelY) , deadZone , 1.0f , minSpeed , maxSpeed , true ) ;
+                largerDir = accelY ;
+            }
+            if ( abs ( largerDir ) <= deadZone )
+            {
+                direction = STILL ;
+            }
+        }
+        
+        
+        collections[ (int)direction ].clipCutOff = 1.0f - abs(accSpeed) ;
+        
+              
+        if ( m.getAddress() == "/remix" )
+        {
+            collections[ (int)direction ].remix( m.getArgAsInt32( 0 ) ) ;
+        }
+    }
+    
+    if ( lastDirection - direction != 0 )
+    {
+        cout << lastDirection << " - " << direction << " = " << ( lastDirection - direction ) << endl ;
+        collections[ (int)lastDirection ].freeze() ;
+        cout<< "FREEZE COMPLETE " << endl ;
+        collections[ (int)direction ].thaw( ) ;
+        cout << "THAW COMPLETE " << endl ;
+    }
 
+    
+    collections[ (int)direction ].update( ) ;
+ 
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
+    stringstream ss ;
+    ss << "FACING : " << endl ;
+    
+    int currentCollection = (int)direction;
+    
+    ofPushMatrix() ;
+        ofTranslate( ofGetWidth() / 2 , ofGetHeight() /2 ) ; 
+        collections[ (int)direction ].draw( ) ;
+    ofPopMatrix() ;
 
+    if ( direction == NORTH )
+    {
+        ss << "NORTH" ;
+    }
+    if ( direction == SOUTH )
+    {
+        ss << "SOUTH" ;
+    }
+    if ( direction == EAST )
+    {
+        ss << "EAST" ;
+    }
+    if ( direction == WEST )
+    {
+        ss << "WEST" ;
+    }
+    if ( direction == STILL )
+    {
+   //     ss << " STILL " ;
+    } ;
+        
+    ofDrawBitmapStringHighlight ( ss.str() , 15 , 15 ) ; 
+        
 }
 
 //--------------------------------------------------------------

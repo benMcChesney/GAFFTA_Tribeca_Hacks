@@ -8,24 +8,35 @@
 
 #include "ArchiveClip.h"
 
-void ArchiveClip::setup ( string videoPath , float direction )
+void ArchiveClip::setup ( string videoPath )
 {
-    alpha = 255.0f ; 
+    alpha = 255.0f ;
+    setPixelFormat(OF_PIXELS_RGB );
+    ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
+    path = videoPath ;
+}
+
+void ArchiveClip::loadFromPath( )
+{
+    loadMovie( path , OF_QTKIT_DECODE_TEXTURE_ONLY ) ;
+    w = getWidth() ;
+    h = getHeight() ;
+    firstFrame() ;
 }
 
 void ArchiveClip::update ( )
 {
-    if ( vid.isPlaying() )
+    if ( isPlaying() )
     {
-        vid.update( ) ;
+        ofQTKitPlayer::update( ) ;
     }
 }
 
 void ArchiveClip::draw ( )
 {
-    if( vid.isPlaying() )
+    if( isPlaying() && alpha > 0.0f )
     {
         ofSetColor( 255 , alpha ) ;
-        vid.draw( 0 , 0 , ofGetWidth() , ofGetHeight() ) ; 
+        ofQTKitPlayer::draw( -w/2 , -h/2 ) ;
     }
 }

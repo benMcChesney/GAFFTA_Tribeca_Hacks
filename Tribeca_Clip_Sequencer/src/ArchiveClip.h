@@ -12,20 +12,21 @@
 #include "ofMain.h"
 #include "ofxTweenzor.h"
 
-class ArchiveClip
+class ArchiveClip : public ofQTKitPlayer
 {
     public :
         ArchiveClip( ) { }
-        ~ArchiveClip( ) { }
+        ~ArchiveClip( ) { } 
     
-    
-        void setup ( string videoPath , float direction ) ;
+        void setup ( string videoPath ) ;
         void update ( ) ;
         void draw ( );
-    
-        ofVideoPlayer vid ; 
+
+        string path ; 
         float alpha ;
-        
+        int w , h ;
+    
+        void loadFromPath ( ) ; 
 };
 
 #endif

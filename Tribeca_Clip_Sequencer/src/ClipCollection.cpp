@@ -76,11 +76,12 @@ int ClipCollection::getRandomIndex( )
         }
     }
     
+    /*
     _index = currentIndex + 1 ;
     if ( _index >= (clips.size()-1) )
     {
         _index = 0 ;
-    }
+    }*/
     return _index ;
 }
 void ClipCollection::remix( int touchId )

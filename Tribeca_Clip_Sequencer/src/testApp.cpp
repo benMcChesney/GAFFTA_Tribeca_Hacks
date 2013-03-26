@@ -15,7 +15,7 @@ void testApp::setup(){
     collections[2].setup( "LEFT" ) ;
     collections[3].setup( "RIGHT" ) ;
     collections[4].setup( "STILL" ) ;
-    collections[4].bRepeatOne = true ;
+   // collections[4].bRepeatOne = true ;
     
     osc.setup( 12345 ) ;
     ofSetFrameRate( 30 ) ;
@@ -114,7 +114,8 @@ void testApp::draw(){
     int currentCollection = (int)direction;
     
     ofPushMatrix() ;
-        ofTranslate( ofGetWidth() / 2 , ofGetHeight() /2 ) ; 
+        ofTranslate( ofGetWidth() / 2 , ofGetHeight() /2 ) ;
+        ofScale ( 1.3, 1.3 ) ;
         collections[ (int)direction ].draw( ) ;
     ofPopMatrix() ;
 
@@ -145,6 +146,49 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
+    
+     lastDirection = direction ;
+    
+    cout << "key : " << key << endl ; 
+    switch ( key )
+    {
+        case 'r':
+        case 'R':
+            collections[ (int)direction ].remix( 0 ) ;
+            break ;
+            
+        case 356 :
+            direction = EAST ;
+            break ;
+            
+        case 357 :
+            direction = NORTH ;
+            break ;
+        
+        case 358 :
+            direction = WEST ; 
+            break ;
+            
+        case 359 :
+            direction = SOUTH ;
+            break ;
+            
+            
+        default :
+            direction = STILL ;
+            break ; 
+            
+        
+    }
+    
+    if ( lastDirection - direction != 0 )
+    {
+        cout << lastDirection << " - " << direction << " = " << ( lastDirection - direction ) << endl ;
+        collections[ (int)lastDirection ].freeze() ;
+        cout<< "FREEZE COMPLETE " << endl ;
+        collections[ (int)direction ].thaw( ) ;
+        cout << "THAW COMPLETE " << endl ;
+    }
 
 }
 
